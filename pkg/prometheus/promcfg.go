@@ -177,6 +177,11 @@ func (cg *configGenerator) generateConfig(
 		scrapeInterval = p.Spec.ScrapeInterval
 	}
 
+	scrapeTimeout := "10s"
+	if p.Spec.ScrapeTimeout != "" {
+		scrapeTimeout = p.Spec.ScrapeTimeout
+	}
+
 	evaluationInterval := "30s"
 	if p.Spec.EvaluationInterval != "" {
 		evaluationInterval = p.Spec.EvaluationInterval
@@ -185,6 +190,7 @@ func (cg *configGenerator) generateConfig(
 	globalItems := yaml.MapSlice{
 		{Key: "evaluation_interval", Value: evaluationInterval},
 		{Key: "scrape_interval", Value: scrapeInterval},
+		{Key: "scrape_timeout", Value: scrapeTimeout},
 		{Key: "external_labels", Value: buildExternalLabels(p)},
 	}
 
